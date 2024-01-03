@@ -4,15 +4,22 @@ using fdcommon.Domain.ValueTypes;
 using fdorder.Domain.Entities;
 using fdorder.Domain.Ports;
 using fdorder.Domain.ValueTypes;
+using fdorder.Queue;
 
 namespace fdorder.Domain.Service
 {
     public class OrderDomainService : IOrderDomainService
     {
         private readonly IOrderRepository _orderRepository;
-        public OrderDomainService(IOrderRepository orderRepository)
+        private readonly OrderEventPublisher _orderEventPublisher = new OrderEventPublisher();
+        private readonly OrderMessageQueue _orderMessageQueue = new OrderMessageQueue();
+
+        public OrderDomainService(
+            IOrderRepository orderRepository)
         {
             this._orderRepository = orderRepository;
+            this._orderEventPublisher.OrderCreated += this._orderMessageQueue.OnOrderCreated;
+
         }
 
         public Task<OrderDto> ApproveOrder(Guid orderId)
@@ -36,6 +43,8 @@ namespace fdorder.Domain.Service
                 Order order = CreateOrderFromDto(customerId, restarentId, orderItems);
 
                 await this._orderRepository.InsertOrder(order);
+
+                this._orderEventPublisher.PublishOnCreatedEvent(order);
 
                 OrderDto orderDto = CreateOrderDtoFromOrder(order);
 
