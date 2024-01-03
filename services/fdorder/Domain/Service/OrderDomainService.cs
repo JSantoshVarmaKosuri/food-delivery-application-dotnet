@@ -8,7 +8,7 @@ using fdorder.Queue;
 
 namespace fdorder.Domain.Service
 {
-    public class OrderDomainService : IOrderDomainService
+    public class OrderDomainService : IOrderDomainService, IDisposable
     {
         private readonly IOrderRepository _orderRepository;
         private readonly OrderEventPublisher _orderEventPublisher = new OrderEventPublisher();
@@ -128,6 +128,11 @@ namespace fdorder.Domain.Service
                 OrderStatus.PENDING
             );
             return order;
+        }
+
+        public void Dispose()
+        {
+            this._orderEventPublisher.OrderCreated -= this._orderMessageQueue.OnOrderCreated;
         }
     }
 }
