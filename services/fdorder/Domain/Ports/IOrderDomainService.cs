@@ -13,5 +13,7 @@ namespace fdorder.Domain.Ports
         Task<OrderDto> RejectOrder(Guid orderId);
         Task<OrderDto> ApproveOrder(Guid orderId);
         Task<OrderDto> CancelOrder(Guid orderId);
+
+        Task<OrderDto> GetOrder(Guid orderId);
     }
 }

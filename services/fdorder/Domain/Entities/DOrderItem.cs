@@ -22,8 +22,8 @@ namespace fdorder.Domain.Entities
             SubTotal = calculatedSubTotal;
         }
 
-        public OrderId OrderId { get; }
-        public List<DDish> Dishes { get; }
-        public Price SubTotal { get; }
+        public OrderId OrderId { get; set; }
+        public List<DDish> Dishes { get; set; }
+        public Price SubTotal { get; set; }
     }
 }

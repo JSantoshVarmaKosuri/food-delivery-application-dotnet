@@ -134,5 +134,19 @@ namespace fdorder.Domain.Service
         {
             this._orderEventPublisher.OrderCreated -= this._orderMessageQueue.OnOrderCreated;
         }
+
+        public async Task<OrderDto> GetOrder(Guid orderId)
+        {
+            try
+            {
+                DOrder order = await this._orderRepository.GetOrder(new OrderId(orderId));
+                OrderDto orderDto = CreateOrderDtoFromOrder(order);
+                return orderDto;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message.ToString());
+            }
+        }
     }
 }

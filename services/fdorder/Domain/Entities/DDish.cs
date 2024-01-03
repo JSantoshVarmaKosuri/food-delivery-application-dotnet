@@ -20,9 +20,9 @@ namespace fdorder.Domain.Entities
             Price = price;
         }
 
-        public OrderItemId OrderItemId { get; }
-        public string Name { get; }
+        public OrderItemId OrderItemId { get; set; }
+        public string Name { get; set; }
         public short Quantity { get; set; }
-        public Price Price { get; }
+        public Price Price { get; set; }
     }
 }

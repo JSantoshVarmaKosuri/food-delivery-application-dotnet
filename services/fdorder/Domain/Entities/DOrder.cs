@@ -25,11 +25,11 @@ namespace fdorder.Domain.Entities
             Price = calculatedPrice;
         }
 
-        public CustomerId CustomerId { get; }
-        public RestarentId RestarentId { get; }
+        public CustomerId CustomerId { get; set; }
+        public RestarentId RestarentId { get; set; }
         public PaymentId PaymentId { get; set; }
-        public List<DOrderItem> OrderItems { get; }
+        public List<DOrderItem> OrderItems { get; set; }
         public OrderStatus OrderStatus { get; set; }
-        public Price Price { get; }
+        public Price Price { get; set; }
     }
 }
