@@ -1,0 +1,6 @@
+@fdgateway_HostAddress = http://localhost:5115
+
+GET {{fdgateway_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

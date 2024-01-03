@@ -1,0 +1,6 @@
+@fdrestarent_HostAddress = http://localhost:5203
+
+GET {{fdrestarent_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

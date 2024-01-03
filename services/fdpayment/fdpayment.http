@@ -1,0 +1,6 @@
+@fdpayment_HostAddress = http://localhost:5073
+
+GET {{fdpayment_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
