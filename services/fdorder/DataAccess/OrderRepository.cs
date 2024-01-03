@@ -1,6 +1,7 @@
 
 using System.Linq;
 using fdcommon.Domain.ValueTypes;
+using fdorder.DataAccess.Entities;
 using fdorder.Domain.Entities;
 using fdorder.Domain.Ports;
 
@@ -14,7 +15,7 @@ namespace fdorder.DataAccess
             this.db = orderContext;
         }
 
-        public Task<Order> DeleteOrder(OrderId orderId)
+        public Task<DOrder> DeleteOrder(OrderId orderId)
         {
             throw new NotImplementedException();
         }
@@ -24,28 +25,28 @@ namespace fdorder.DataAccess
             throw new NotImplementedException();
         }
 
-        public Task<Order> GetOrder(OrderId orderId)
+        public Task<DOrder> GetOrder(OrderId orderId)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<bool> InsertOrder(Order order)
+        public async Task<bool> InsertOrder(DOrder order)
         {
             try
             {
-                fdorder.DataAccess.Entities.Order dbOrder = new fdorder.DataAccess.Entities.Order();
+                Order dbOrder = new Order();
                 dbOrder.OrderId = order.Id.Id;
                 dbOrder.RestarentId = order.RestarentId.Id;
                 dbOrder.CustomerId = order.CustomerId.Id;
                 dbOrder.PaymentId = null;
                 dbOrder.Status = (byte)order.OrderStatus;
                 dbOrder.Price = order.Price.Amount;
-                foreach (OrderItem orderItem in order.OrderItems)
+                foreach (DOrderItem orderItem in order.OrderItems)
                 {
-                    fdorder.DataAccess.Entities.OrderItem newOrderItem = new fdorder.DataAccess.Entities.OrderItem();
-                    foreach (Dish dish in orderItem.Dishes)
+                    OrderItem newOrderItem = new OrderItem();
+                    foreach (DDish dish in orderItem.Dishes)
                     {
-                        fdorder.DataAccess.Entities.Dish newDish = new fdorder.DataAccess.Entities.Dish();
+                        Dish newDish = new Dish();
                         newDish.DishId = dish.Id.Id;
                         newDish.OrderItemId = dish.OrderItemId.Id;
                         newDish.Name = dish.Name;
@@ -58,11 +59,11 @@ namespace fdorder.DataAccess
                     newOrderItem.OrderItemId = orderItem.Id.Id;
                     dbOrder.OrderItems.Add(newOrderItem);
                 }
-                
+
                 await this.db.Orders.AddAsync(dbOrder);
 
                 await this.db.SaveChangesAsync();
-                
+
                 return true;
             }
             catch (Exception e)
@@ -72,7 +73,7 @@ namespace fdorder.DataAccess
             }
         }
 
-        public Task<Order> UpdateOrder(Order order)
+        public Task<DOrder> UpdateOrder(DOrder order)
         {
             throw new NotImplementedException();
         }

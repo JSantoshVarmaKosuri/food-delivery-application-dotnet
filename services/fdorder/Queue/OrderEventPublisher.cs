@@ -1,21 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using fdorder.Domain.Entities;
 
 namespace fdorder.Queue
 {
     public class OrderEventPublisher
     {
-        public event EventHandler<Order>? OrderCreated;
+        public event EventHandler<DOrder>? OrderCreated;
 
-        protected virtual void OnOrderCreate(Order order)
+        protected virtual void OnOrderCreate(DOrder order)
         {
             OrderCreated?.Invoke(this, order);
         }
 
-        public void PublishOnCreatedEvent(Order order)
+        public void PublishOnCreatedEvent(DOrder order)
         {
             OnOrderCreate(order);
         }

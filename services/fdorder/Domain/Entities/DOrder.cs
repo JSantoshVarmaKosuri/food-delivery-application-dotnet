@@ -3,13 +3,13 @@ using fdcommon.Domain.ValueTypes;
 
 namespace fdorder.Domain.Entities
 {
-    public class Order : BaseEntity<OrderId>
+    public class DOrder : BaseEntity<OrderId>
     {
-        public Order(
+        public DOrder(
             OrderId orderId,
             CustomerId customerId,
             RestarentId restarentId,
-            List<OrderItem> orderItems,
+            List<DOrderItem> orderItems,
             OrderStatus orderStatus
         ) : base(orderId)
         {
@@ -18,7 +18,7 @@ namespace fdorder.Domain.Entities
             OrderItems = orderItems;
             OrderStatus = orderStatus;
             Price calculatedPrice = new Price(Price.Zero);
-            orderItems.ForEach((OrderItem orderItem) =>
+            orderItems.ForEach((DOrderItem orderItem) =>
             {
                 calculatedPrice.addMount(orderItem.SubTotal.Amount);
             });
@@ -28,7 +28,7 @@ namespace fdorder.Domain.Entities
         public CustomerId CustomerId { get; }
         public RestarentId RestarentId { get; }
         public PaymentId PaymentId { get; set; }
-        public List<OrderItem> OrderItems { get; }
+        public List<DOrderItem> OrderItems { get; }
         public OrderStatus OrderStatus { get; set; }
         public Price Price { get; }
     }

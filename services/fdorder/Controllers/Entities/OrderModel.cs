@@ -10,6 +10,6 @@ namespace fdorder.Controllers.Entities
     {
         public Guid customerId { get; set; }
         public Guid restarentId { get; set; }
-        public List<OrderItemDto> orderItems { get; set; }
+        public List<OrderItemDto> orderItems { get; set; } = [];
     }
 }

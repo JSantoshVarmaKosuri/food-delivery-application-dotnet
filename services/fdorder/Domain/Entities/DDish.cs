@@ -4,9 +4,9 @@ using fdorder.Domain.ValueTypes;
 
 namespace fdorder.Domain.Entities
 {
-    public class Dish : BaseEntity<DishId>
+    public class DDish : BaseEntity<DishId>
     {
-        public Dish(
+        public DDish(
             DishId dishId,
             OrderItemId orderItemId,
             string name,

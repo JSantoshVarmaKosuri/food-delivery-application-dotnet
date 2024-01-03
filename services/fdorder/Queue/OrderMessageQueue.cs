@@ -13,7 +13,7 @@ namespace fdorder.Queue
 
         }
 
-        public void OnOrderCreated(object sender, Order order)
+        public void OnOrderCreated(object sender, DOrder order)
         {
             Console.WriteLine($"Order {order.Id.Id} create. send message to the queue...");
         }

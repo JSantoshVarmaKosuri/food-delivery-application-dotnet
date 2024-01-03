@@ -9,10 +9,10 @@ namespace fdorder.Domain.Ports
 {
     public interface IOrderRepository
     {
-        Task<bool> InsertOrder(Order order);
-        Task<Order> UpdateOrder(Order order);
-        Task<Order> DeleteOrder(OrderId orderId);
-        Task<Order> GetOrder(OrderId orderId);
+        Task<bool> InsertOrder(DOrder order);
+        Task<DOrder> UpdateOrder(DOrder order);
+        Task<DOrder> DeleteOrder(OrderId orderId);
+        Task<DOrder> GetOrder(OrderId orderId);
         Task<IEnumerable<Order>> GetAll<Order>(Func<Order, bool> predicate);
     }
 }

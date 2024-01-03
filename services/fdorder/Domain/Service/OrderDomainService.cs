@@ -40,7 +40,7 @@ namespace fdorder.Domain.Service
         {
             try
             {
-                Order order = CreateOrderFromDto(customerId, restarentId, orderItems);
+                DOrder order = CreateOrderFromDto(customerId, restarentId, orderItems);
 
                 await this._orderRepository.InsertOrder(order);
 
@@ -66,18 +66,18 @@ namespace fdorder.Domain.Service
             throw new NotImplementedException();
         }
 
-        private static OrderDto CreateOrderDtoFromOrder(Order order)
+        private static OrderDto CreateOrderDtoFromOrder(DOrder order)
         {
             return new OrderDto(
                                 order.Id.Id,
                                 order.CustomerId.Id,
                                 order.RestarentId.Id,
-                                order.OrderItems.Select((OrderItem orderItem) =>
+                                order.OrderItems.Select((DOrderItem orderItem) =>
                                 {
                                     return new OrderItemDto(
                                         orderItem.Id.Id,
                                         orderItem.OrderId.Id,
-                                        orderItem.Dishes.Select((Dish dish) =>
+                                        orderItem.Dishes.Select((DDish dish) =>
                                         {
                                             return new DishDto(
                                                 dish.Id.Id,
@@ -95,32 +95,32 @@ namespace fdorder.Domain.Service
                             );
         }
 
-        private static Order CreateOrderFromDto(Guid customerId, Guid restarentId, List<OrderItemDto> orderItems)
+        private static DOrder CreateOrderFromDto(Guid customerId, Guid restarentId, List<OrderItemDto> orderItems)
         {
             OrderId orderId = new OrderId(Guid.NewGuid());
-            List<OrderItem> newOrderItems = orderItems.Select((OrderItemDto orderItem) =>
+            List<DOrderItem> newOrderItems = orderItems.Select((OrderItemDto orderItem) =>
             {
                 OrderItemId newOrderItemId = new OrderItemId(Guid.NewGuid());
 
-                List<Dish> newDishes = orderItem.Dishes.Select((DishDto dish) =>
+                List<DDish> newDishes = orderItem.Dishes.Select((DishDto dish) =>
                 {
-                    return new Dish(
+                    return new DDish(
                         new DishId(Guid.NewGuid()),
                         newOrderItemId,
                         dish.Name,
                         dish.Quantity,
                         new Price(decimal.Parse(dish.Price.ToString()))
                     );
-                }).ToList<Dish>();
+                }).ToList<DDish>();
 
-                return new OrderItem(
+                return new DOrderItem(
                     newOrderItemId,
                     orderId,
                     newDishes
                 );
-            }).ToList<OrderItem>();
+            }).ToList<DOrderItem>();
 
-            Order order = new Order(
+            DOrder order = new DOrder(
                 orderId,
                 new CustomerId(customerId),
                 new RestarentId(restarentId),
